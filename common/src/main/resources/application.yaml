@@ -3,11 +3,14 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
-    default-schema: my_shop
   datasource:
     url: jdbc:postgresql://localhost:5432/shop
     username: postgres
     password: postgres
   flyway:
-    default-schema: my_shop
     baseline-on-migrate: true
+
+server:
+  port: 8081
+
+

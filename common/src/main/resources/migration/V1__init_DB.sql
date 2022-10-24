@@ -66,35 +66,42 @@ create table users
     primary key (id)
 );
 alter table if exists orders_details
-    add constraint UK_kk6y3pyhjt6kajomtjbhsoajo
+    add constraint orders_details
         unique (details_id);
 alter table if exists buckets
     add constraint buckets_fk_user
         foreign key (user_id) references users;
 alter table if exists buckets_products
-    add constraint FKloyxdc1uy11tayedf3dpu9lci
+    add constraint buckets_products_fk_products
         foreign key (product_id) references products;
 alter table if exists buckets_products
-    add constraint FKb9heoc6sak66m5t8ai4g2hknm
+    add constraint buckets_products_fk_buckets
         foreign key (buckets_id) references buckets;
+
 alter table if exists orders
-    add constraint FK32ql8ubntj5uh44ph9659tiih
+    add constraint orders_details_fk_users
         foreign key (user_id) references users;
+
 alter table if exists orders_details
-    add constraint FK5o977kj2vptwo70fu7w7so9fe
+    add constraint orders_details_fk_order
         foreign key (order_id) references orders;
+
 alter table if exists orders_details
-    add constraint FKs0r9x49croribb4j6tah648gt
+    add constraint orders_details_fk_products
         foreign key (product_id) references products;
+
 alter table if exists orders_details
-    add constraint FKgvp1k7a3ubdboj3yhnawd5m1p
+    add constraint orders_details_fk_orders_details
         foreign key (details_id) references orders_details;
+
 alter table if exists products_categories
-    add constraint FKqt6m2o5dly3luqcm00f5t4h2p
+    add constraint products_categories_fk_categories
         foreign key (category_id) references categories;
+
 alter table if exists products_categories
-    add constraint FKtj1vdea8qwerbjqie4xldl1el
+    add constraint products_categories_fk_products
         foreign key (product_id) references products;
+
 alter table if exists users
-    add constraint FK8l2qc4c6gihjdyoch727guci
+    add constraint users_fk_buckets
         foreign key (bucket_id) references buckets;

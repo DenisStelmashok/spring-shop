@@ -30,11 +30,7 @@ public class UserServiceImpl implements UserService{
         if (!Objects.equals(userDTO.getPassword(), userDTO.getMatchingPassword())) {
             throw new RuntimeException("Password is not equals");
         }
-        com.stelmashok.domain.User user = User.builder()
-                .username(userDTO.getUsername())
-                .password(passwordEncoder.encode(userDTO.getPassword()))
-                .em
-                .build()
+        com.stelmashok.domain.User user = com.stelmashok.domain.User.builder()
                 .name(userDTO.getUsername())
                 .password(passwordEncoder.encode(userDTO.getPassword()))
                 .email(userDTO.getEmail())
