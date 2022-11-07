@@ -5,23 +5,33 @@
   <title>Add user</title>
 </head>
 <body>
-<form th:action="@{/user/new}" th:object="${user}" method="post">
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<form th:action="@{/users/new}" th:object="${user}" method="post">
   <table border="1">
     <tr>
       <td>Name</td>
-      <td><input type="text" th:field="*{username}"></td>
+      <td><label>
+        <input type="text" th:field="*{username}">
+      </label></td>
     </tr>
     <tr>
       <td>Password</td>
-      <td><input type="password" th:field="*{password}"></td>
+      <td><label>
+        <input type="password" th:field="*{password}">
+      </label></td>
     </tr>
     <tr>
       <td>Matching password</td>
-      <td><input type="password" th:field="*{matchingPassword}"></td>
+      <td><label>
+        <input type="password" th:field="*{matchingPassword}">
+      </label></td>
     </tr>
     <tr>
       <td>Email</td>
-      <td><input type="email" th:field="*{email}"></td>
+      <td><label>
+        <input type="email" th:field="*{email}">
+      </label></td>
     </tr>
   </table>
   <button type="submit">Save</button>

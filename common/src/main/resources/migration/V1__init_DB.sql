@@ -62,7 +62,6 @@ create table users
     name      varchar(255),
     password  varchar(255),
     role      varchar(255),
-    bucket_id int8,
     primary key (id)
 );
 alter table if exists orders_details
@@ -102,6 +101,7 @@ alter table if exists products_categories
     add constraint products_categories_fk_products
         foreign key (product_id) references products;
 
-alter table if exists users
-    add constraint users_fk_buckets
-        foreign key (bucket_id) references buckets;
+
+alter table if exists orders_details drop constraint if exists orders_details;
+
+alter table if exists orders_details add constraint orders_details unique (details_id)
