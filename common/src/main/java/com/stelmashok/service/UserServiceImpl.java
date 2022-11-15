@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -76,30 +76,30 @@ public class UserServiceImpl implements UserService{
                 .build();
     }
     @Override
-    public User findByUsername(String name) {
+    public User findByName(String name) {
         return userRepository.findFirstByName(name);
 
     }
     @Override
     @Transactional
-    public void updateProfile (UserDTO userDTO) {
-        User saveUser = userRepository.findFirstByName(userDTO.getUsername());
-        if (saveUser == null){
+    public void updateProfile (UserDTO dto) {
+        User savedUser = userRepository.findFirstByName(dto.getUsername());
+        if (savedUser == null){
             throw new RuntimeException("User not found with name: " + dto.getUsername());
 
         }
         boolean isChanged = false;
-        if (userDTO.getPassword() != null && !dto.getPassword().isEmpty()){
-            saveUser.setPassword(passwordEncoder.encode(dto.getPassword()));
+        if (dto.getPassword() != null && !dto.getPassword().isEmpty()){
+            savedUser.setPassword(passwordEncoder.encode(dto.getPassword()));
             isChanged = true;
         }
 
-        if (!Objects.equals(dto.getEmail(), saveUser.getEmail())){
-            saveUser.setEmail(dto.getEmail());
+        if (!Objects.equals(dto.getEmail(), savedUser.getEmail())){
+            savedUser.setEmail(dto.getEmail());
             isChanged = true;
         }
         if (isChanged){
-            userRepository.save(saveUser);
+            userRepository.save(savedUser);
+        }
     }
-}
 }

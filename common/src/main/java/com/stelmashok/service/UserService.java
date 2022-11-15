@@ -14,6 +14,4 @@ public interface UserService extends UserDetailsService {
 
     User findByName(String name);
     void updateProfile(UserDTO userDTO);
-
-    User findByUsername(String name);
 }

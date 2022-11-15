@@ -1,5 +1,6 @@
 package com.stelmashok.service;
 
+import com.stelmashok.dao.BucketRepository;
 import com.stelmashok.dao.ProductRepository;
 import com.stelmashok.domain.Bucket;
 import com.stelmashok.domain.Product;
@@ -46,7 +47,7 @@ public class BucketServiceImpl implements BucketService{
     }
     @Override
     public void addProducts(Bucket bucket, List<Long> productIds){
-        List<Product> productList = bucket.getProducts();
+        List<Product> products = bucket.getProducts();
         List<Product> newProductList = products == null ? new ArrayList<>() : new ArrayList<>(products);
         newProductList.addAll(getCollectRefProductsByIds(productIds));
         bucket.setProducts(newProductList);

@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     @Transactional
     public void addToUserBucket(Long productId, String username){
-        User user = userService.findByUsername(username);
+        User user = userService.findByName(username);
         if(user == null){
             throw new RuntimeException("User not found - " + username);
         }

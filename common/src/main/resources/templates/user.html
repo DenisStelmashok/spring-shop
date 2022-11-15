@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <title>Add user</title>
+    <meta charset="UTF-8">
+    <title>Add user</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
 <form th:action="@{/users/new}" th:object="${user}" method="post">
-  <table border="1">
-    <tr>
-      <td>Name</td>
-      <td><label>
-        <input type="text" th:field="*{username}">
-      </label></td>
-    </tr>
-    <tr>
-      <td>Password</td>
-      <td><label>
-        <input type="password" th:field="*{password}">
-      </label></td>
-    </tr>
-    <tr>
-      <td>Matching password</td>
-      <td><label>
-        <input type="password" th:field="*{matchingPassword}">
-      </label></td>
-    </tr>
-    <tr>
-      <td>Email</td>
-      <td><label>
-        <input type="email" th:field="*{email}">
-      </label></td>
-    </tr>
-  </table>
-  <button type="submit">Save</button>
+    <table border="1">
+        <tr>
+            <td>Name</td>
+            <td><label>
+                <input type="text" th:field="*{username}">
+            </label></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><label>
+                <input type="password" th:field="*{password}">
+            </label></td>
+        </tr>
+        <tr>
+            <td>Matching password</td>
+            <td><label>
+                <input type="password" th:field="*{matchingPassword}">
+            </label></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><label>
+                <input type="email" th:field="*{email}">
+            </label></td>
+        </tr>
+    </table>
+    <button type="submit">Save</button>
 </form>
 </body>
 </html>

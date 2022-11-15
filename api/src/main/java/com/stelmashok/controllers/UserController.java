@@ -35,7 +35,7 @@ public class UserController {
     public String saveUser(UserDTO dto, Model model){
         if (userService.save(dto)){
             return "redirect:/users";
-            }else {
+            } else {
             model.addAttribute("user", dto);
             return "user";
         }
@@ -53,7 +53,6 @@ public class UserController {
                 .username(user.getName())
                 .email(user.getEmail())
                 .build();
-
         model.addAttribute("user", dto);
         return "profile";
     }
@@ -64,8 +63,8 @@ public class UserController {
 
         }
         if (dto.getPassword() !=null
-            &&!dto.getPassword().isEmpty()
-            &&!Objects.equals(dto.getPassword(), dto.getMatchingPassword())){
+                &&!dto.getPassword().isEmpty()
+                &&!Objects.equals(dto.getPassword(), dto.getMatchingPassword())){
             model.addAttribute("user", dto);
             return "profile";
 
