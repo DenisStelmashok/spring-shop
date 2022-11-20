@@ -3,7 +3,7 @@ package com.stelmashok.service;
 import com.stelmashok.dao.UserRepository;
 import com.stelmashok.domain.Role;
 import com.stelmashok.domain.User;
-import com.stelmashok.dto.UserDTO;
+import com.stelmashok.dto.UserDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,9 +28,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean save(UserDTO userDTO) {
+    public boolean save(UserDto userDTO) {
         if (!Objects.equals(userDTO.getPassword(), userDTO.getMatchingPassword())) {
-            throw new RuntimeException("Password is not equals");
+            throw new IllegalArgumentException("Password is not equals");
         }
         User user = User.builder()
                 .name(userDTO.getUsername())
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
     @Override
-    public List<UserDTO> getAll(){
+    public List<UserDto> getAll(){
         return userRepository.findAll().stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
@@ -69,8 +69,8 @@ public class UserServiceImpl implements UserService {
         );
     }
 
-    private UserDTO toDto (User user) {
-        return UserDTO.builder()
+    private UserDto toDto (User user) {
+        return UserDto.builder()
                 .username(user.getName())
                 .email(user.getEmail())
                 .build();
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     @Transactional
-    public void updateProfile (UserDTO dto) {
+    public void updateProfile (UserDto dto) {
         User savedUser = userRepository.findFirstByName(dto.getUsername());
         if (savedUser == null){
             throw new RuntimeException("User not found with name: " + dto.getUsername());

@@ -1,7 +1,7 @@
 package com.stelmashok.controllers;
 
 import com.stelmashok.domain.User;
-import com.stelmashok.dto.UserDTO;
+import com.stelmashok.dto.UserDto;
 import com.stelmashok.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,11 +28,11 @@ public class UserController {
     }
     @GetMapping("/new")
     public String newUser (Model model){
-        model.addAttribute("user", new UserDTO());
+        model.addAttribute("user", new UserDto());
         return "user";
     }
     @PostMapping("/new")
-    public String saveUser(UserDTO dto, Model model){
+    public String saveUser(UserDto dto, Model model){
         if (userService.save(dto)){
             return "redirect:/users";
             } else {
@@ -49,15 +49,15 @@ public class UserController {
         }
         User user = userService.findByName(principal.getName());
 
-        UserDTO dto = UserDTO.builder()
+        UserDto dto = UserDto.builder()
                 .username(user.getName())
                 .email(user.getEmail())
                 .build();
         model.addAttribute("user", dto);
         return "profile";
     }
-    @PostMapping
-    public String updateProfileUser(UserDTO dto, Model model, Principal principal){
+    @PostMapping("/profile")
+    public String updateProfileUser(UserDto dto, Model model, Principal principal){
         if (principal == null || !Objects.equals(principal.getName(), dto.getUsername())){
             throw new RuntimeException("You are not authorize");
 

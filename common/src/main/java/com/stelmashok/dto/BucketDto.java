@@ -12,15 +12,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BucketDTO {
+public class BucketDto {
     private int amountProducts;
     private Double sum;
-    private List<BucketDetailDTO> bucketDetails = new ArrayList<>();
+    private List<BucketDetailDto> bucketDetails = new ArrayList<>();
 
     public void aggregate (){
         this.amountProducts = bucketDetails.size();
         this.sum = bucketDetails.stream()
-                .map(BucketDetailDTO::getSum)
+                .map(BucketDetailDto::getSum)
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }

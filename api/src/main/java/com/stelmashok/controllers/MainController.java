@@ -14,17 +14,18 @@ public class MainController {
     private final SessionObjectHolder sessionObjectHolder;
 
     public MainController(SessionObjectHolder sessionObjectHolder){
+
         this.sessionObjectHolder = sessionObjectHolder;
     }
     @RequestMapping({"", "/"})
     public String index (Model model, HttpSession httpSession) {
         model.addAttribute("amountClicks", sessionObjectHolder.getAmountClicks());
-        if (httpSession.getAttribute("MyID")==null){
+        if (httpSession.getAttribute("myID")==null){
             String uuid = UUID.randomUUID().toString();
-            httpSession.setAttribute("MyID", uuid);
-            System.out.println("Generated UVID -" + uuid);
+            httpSession.setAttribute("myID", uuid);
+            System.out.println("Generated UUID ->" + uuid);
         }
-        model.addAttribute("uvid", httpSession.getAttribute("myID"));
+        model.addAttribute("uuid", httpSession.getAttribute("myID"));
         return "index";
     }
 
@@ -36,6 +37,6 @@ public class MainController {
     @RequestMapping("/login-error")
     public String loginError (Model model){
         model.addAttribute("loginError", true);
-        return "Login";
+        return "login";
     }
 }

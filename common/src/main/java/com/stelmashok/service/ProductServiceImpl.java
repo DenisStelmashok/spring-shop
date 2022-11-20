@@ -3,7 +3,7 @@ package com.stelmashok.service;
 import com.stelmashok.dao.ProductRepository;
 import com.stelmashok.domain.Bucket;
 import com.stelmashok.domain.User;
-import com.stelmashok.dto.ProductDTO;
+import com.stelmashok.dto.ProductDto;
 import com.stelmashok.mapper.ProductMapper;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<ProductDTO> getAll(){
+    public List<ProductDto> getAll(){
         return mapper.fromProductList(productRepository.findAll());
     }
 

@@ -2,7 +2,7 @@ package com.stelmashok.service;
 
 import com.stelmashok.domain.Bucket;
 import com.stelmashok.domain.User;
-import com.stelmashok.dto.BucketDTO;
+import com.stelmashok.dto.BucketDto;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public interface BucketService {
 
     void addProducts (Bucket bucket, List<Long> productIds);
 
-    BucketDTO getBucketByUser(String name);
+    BucketDto getBucketByUser(String name);
 }

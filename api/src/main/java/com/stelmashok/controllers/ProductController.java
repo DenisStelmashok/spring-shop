@@ -1,6 +1,6 @@
 package com.stelmashok.controllers;
 
-import com.stelmashok.dto.ProductDTO;
+import com.stelmashok.dto.ProductDto;
 import com.stelmashok.service.ProductService;
 import com.stelmashok.service.SessionObjectHolder;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ public class ProductController {
     @GetMapping
     public String list(Model model){
         sessionObjectHolder.addClick();
-        List<ProductDTO> list = productService.getAll();
+        List<ProductDto> list = productService.getAll();
         model.addAttribute("product", list);
         return "products";
 

@@ -13,14 +13,14 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BucketDetailDTO {
+public class BucketDetailDto {
     private String title;
     private Long productId ;
     private BigDecimal price;
     private BigDecimal amount;
     private Double sum;
 
-    public BucketDetailDTO (Product product){
+    public BucketDetailDto(Product product){
         this.title = product.getTitle();
         this.productId = product.getId();
         this.price = product.getPrice();

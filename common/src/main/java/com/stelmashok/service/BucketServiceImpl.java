@@ -5,8 +5,8 @@ import com.stelmashok.dao.ProductRepository;
 import com.stelmashok.domain.Bucket;
 import com.stelmashok.domain.Product;
 import com.stelmashok.domain.User;
-import com.stelmashok.dto.BucketDTO;
-import com.stelmashok.dto.BucketDetailDTO;
+import com.stelmashok.dto.BucketDto;
+import com.stelmashok.dto.BucketDetailDto;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -55,27 +55,27 @@ public class BucketServiceImpl implements BucketService{
     }
 
     @Override
-    public BucketDTO getBucketByUser (String name){
+    public BucketDto getBucketByUser (String name){
         User user = userService.findByName(name);
         if(user == null || user.getBucket() == null){
-            return new BucketDTO();
+            return new BucketDto();
         }
 
-        BucketDTO bucketDTO = new BucketDTO();
-        Map<Long, BucketDetailDTO> mapByProductID = new HashMap<>();
+        BucketDto bucketDto = new BucketDto();
+        Map<Long, BucketDetailDto> mapByProductId = new HashMap<>();
 
         List<Product> products = user.getBucket().getProducts();
         for(Product product : products){
-            BucketDetailDTO detail = mapByProductID.get(product.getId());
+            BucketDetailDto detail = mapByProductId.get(product.getId());
             if(detail == null){
-                mapByProductID.put(product.getId(), new BucketDetailDTO(product));
+                mapByProductId.put(product.getId(), new BucketDetailDto(product));
                 }else{
                 detail.setAmount(detail.getAmount().add(new BigDecimal(1.0)));
                 detail.setSum(detail.getSum() + Double.valueOf(product.getPrice().toString()));
             }
         }
-        bucketDTO.setBucketDetails(new ArrayList<>(mapByProductID.values()));
-        bucketDTO.aggregate();
-        return bucketDTO;
+        bucketDto.setBucketDetails(new ArrayList<>(mapByProductId.values()));
+        bucketDto.aggregate();
+        return bucketDto;
     }
 }

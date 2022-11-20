@@ -7,7 +7,7 @@
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<p th:if="${LoginError}" class="error">Wrong user or password</p>
+<p th:if="${loginError}" class="error">Wrong user or password</p>
 <form th:action="@{/auth}" method="post">
     <table border="1">
         <tr>
