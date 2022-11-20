@@ -27,7 +27,7 @@ public class ProductController {
     public String list(Model model){
         sessionObjectHolder.addClick();
         List<ProductDto> list = productService.getAll();
-        model.addAttribute("product", list);
+        model.addAttribute("products", list);
         return "products";
 
     }
