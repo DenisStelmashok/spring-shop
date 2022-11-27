@@ -13,6 +13,14 @@ spring:
     baseline-on-migrate: true
 
 server:
+  hostname: localhost
   port: 8081
+mail:
+  server:
+    host: smtp.gmail.com
+    port: 465
+    username: d.s.stelmashok@gmail.com
+    password: Stel@1983
+
 
 

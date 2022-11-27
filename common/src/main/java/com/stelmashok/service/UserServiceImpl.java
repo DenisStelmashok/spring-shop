@@ -15,19 +15,26 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    private final MailSenderService mailSenderService;
+
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, MailSenderService mailSenderService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.mailSenderService = mailSenderService;
     }
 
     @Override
+    @Transactional
     public boolean save(UserDto userDTO) {
         if (!Objects.equals(userDTO.getPassword(), userDTO.getMatchingPassword())) {
             throw new IllegalArgumentException("Password is not equals");
@@ -37,6 +44,7 @@ public class UserServiceImpl implements UserService {
                 .password(passwordEncoder.encode(userDTO.getPassword()))
                 .email(userDTO.getEmail())
                 .role(Role.CLIENT)
+                .activateCode(java.util.UUID.randomUUID().toString())
                 .build();
         userRepository.save(user);
         return true;
@@ -44,7 +52,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
+
         userRepository.save(user);
+        if (user.getActivateCode() != null && !user.getActivateCode().isEmpty()) {
+            mailSenderService.sendActivateCode(user);
+        }
     }
     @Override
     public List<UserDto> getAll(){
@@ -73,6 +85,7 @@ public class UserServiceImpl implements UserService {
         return UserDto.builder()
                 .username(user.getName())
                 .email(user.getEmail())
+                .activated(user.getActivateCode() == null)
                 .build();
     }
     @Override
@@ -101,5 +114,21 @@ public class UserServiceImpl implements UserService {
         if (isChanged){
             userRepository.save(savedUser);
         }
+    }
+    @Override
+    @Transactional
+    public boolean activateUser(String activateCode) {
+        if(activateCode == null || activateCode.isEmpty()){
+            return false;
+        }
+        User user = userRepository.findFirstByActivateCode(activateCode);
+        if(user == null){
+            return false;
+        }
+
+        user.setActivateCode(null);
+        userRepository.save(user);
+
+        return true;
     }
 }

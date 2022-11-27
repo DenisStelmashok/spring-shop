@@ -4,6 +4,7 @@ import com.stelmashok.domain.Role;
 import com.stelmashok.service.UserService;
 import com.stelmashok.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -25,19 +26,22 @@ import javax.persistence.Basic;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private UserService userService;
     @Autowired
-    public void setUserService(@Lazy UserService userService){
-
-        this.userService = userService;
-    }
+    private ApplicationContext applicationContext;
+    private UserService userService;
+//    @Autowired
+//    public void setUserService(@Lazy UserService userService){
+//
+//        this.userService = userService;
+    //}
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
-    @Basic
+    @Bean
     public DaoAuthenticationProvider authenticationProvider() {
+        initUserService();
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userService);
         auth.setPasswordEncoder(passwordEncoder());
@@ -46,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
+
         return new BCryptPasswordEncoder();
     }
 
@@ -68,5 +73,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .csrf().disable();
 
+    }
+
+    private void initUserService(){
+        if(userService == null){
+            userService = applicationContext.getBean(UserService.class);
+        }
     }
 }

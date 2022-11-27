@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -37,5 +38,7 @@ public class User {
     private Role role;
     @OneToOne(mappedBy ="user", cascade = CascadeType.REMOVE)
     private Bucket bucket;
+    @Column(name = "activate_code", length = 80)
+    private String activateCode;
 
 }
